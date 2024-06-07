@@ -1,25 +1,36 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { Component } from 'react';
+import PhoneForm from './components/PhoneForm';
+import PhoneInfoList from './components/PhoneInfoList';
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends Component {
+
+  id = 0;
+
+  state = {
+    information: [],
+  }
+
+  handleCreate = (data) => {
+    console.log(data);
+    // 기존의 배열은 수정하지 않고 새로운 배열로 생성
+    const {information} = this.state;
+    this.setState({
+      information: information.concat(
+        Object.assign({}, data, {
+          id: this.id++
+        })
+      )
+    })
+  }
+  render() {
+    return (
+      <div>
+        <PhoneForm onCreate={this.handleCreate}/>
+        {/* {JSON.stringify(this.state.information)} */}
+        <PhoneInfoList data={this.state.information}/>
+      </div>
+    );
+  }
 }
 
 export default App;
